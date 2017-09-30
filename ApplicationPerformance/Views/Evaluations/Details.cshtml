@@ -1,0 +1,73 @@
+﻿@model ApplicationPerformance.Models.Evaluation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompleteObjectives)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompleteObjectives)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalObjectives)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalObjectives)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerComment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SystemUser.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SystemUser.LastName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EvaluationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

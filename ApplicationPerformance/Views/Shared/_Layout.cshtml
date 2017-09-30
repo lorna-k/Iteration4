@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Performance Management System</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/themes/jquery-ui.css" rel="stylesheet"/>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery-ui.js"</script>
+    @Scripts.Render("~/bundles/modernizr")
+    <script>
+    
+        $(function () {
+
+            $("#dialog-modal").dialog({
+                autoOpen: false, 
+                width: 600,
+                height: 480,
+                show: {
+                    effect: "shake",
+                    duration: 100
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+            $("#opener").click(function(){
+                $("#dialog-modal").dialog("open");
+            
+            });
+        });
+
+            </script>
+                @*.click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/html; charset=utf-8",
+                data: { "RoleID": RoleID },
+                datatype: "html",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+    </script>*@
+       
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #e3f2fd;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("LogIn","SystemUsers")" class="" navbar-brand>
+                    <img src="~/Content/Pictures/header-logo-white.png" height="67" style="padding-top:5px; padding-bottom:5px;" />
+                </a>
+
+            </div>
+            @* //////////////// *@
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Session["admin"] != null)
+                    {
+
+                        <li>@Html.ActionLink("Users", "Index", "SystemUsers")</li>
+                        <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                        <li>@Html.ActionLink("Appraisal Period", "Index", "Appraisals")</li>
+                        <li>@Html.ActionLink("Change Roles", "RolesSelect", "SystemUsers")</li>
+
+                    }
+
+                    else if (Session["employee"] != null)
+                    {
+                        <li>@Html.ActionLink("Employee", "SelectedEmployee", "Goals")</li>
+                        <li>@Html.ActionLink("Change Roles", "RolesSelect", "SystemUsers")</li>
+
+                    }
+                    else if (Session["manager"] != null)
+                    {
+                        <li>@Html.ActionLink("Objectives Guidelines", "Index", "Objectives")</li>
+                        <li>@Html.ActionLink("Manager", "MoveToManagerPage", "SystemUsers")</li>
+                        <li>@Html.ActionLink("Change Roles", "RolesSelect", "SystemUsers")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["User"] != null)
+                    {
+                        <li>
+                            @Html.ActionLink("Log Out", "LogOut", "SystemUsers")
+                        </li>
+                    }
+
+                </ul>
+
+            </div>             
+            </div>
+        </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Performance Management System</p>
+        </footer>
+    </div>
+   
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

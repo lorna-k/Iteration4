@@ -1,0 +1,79 @@
+﻿@model ApplicationPerformance.Models.Evaluation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompleteObjectives)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompleteObjectives)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalObjectives)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalObjectives)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerComment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SystemUser.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SystemUser.LastName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

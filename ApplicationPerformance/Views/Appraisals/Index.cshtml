@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.Appraisal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Appraisal Dates</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Create")'">Create New Period</button>
+
+</p>
+<table class="table table-hover" style="margin-top:50px">
+
+    <caption class="display-caption" style="text-align:center;">
+
+        List of all appraisals
+    </caption>
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>Appraisal End Date</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Appraisal Start Date</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Appraisal Status</strong> </span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+        
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppraisalEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppraisalStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppraisalStatus)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AppraisalID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.AppraisalID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AppraisalID })
+                </td>
+            </tr>
+        }
+
+    </table>

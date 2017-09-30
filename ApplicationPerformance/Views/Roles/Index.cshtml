@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.Role>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Assigned Roles</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Find by first, last name or assigned role: @Html.TextBox("SearchString")
+        <input class="btn btn-searching" type="submit" value="Search" />
+    </p>
+}
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+<div class="row" style="margin-bottom:5px">
+
+    <div class="col-md-10">
+
+    </div>
+
+    <div class="col-md-2" style="margin-bottom:35px">
+
+        <button style="text-align:center" class="btn btn-searching"
+                onclick="location.href='@Url.Action("Create","Roles")'">
+            Assign Role
+
+        </button>
+
+
+
+    </div>
+</div>
+
+
+<table class="table table-hover">
+
+    
+
+        <caption class="display-caption" style="text-align:center;">
+
+            List of all assigned roles
+        </caption>
+
+
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>Role</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Last Name</strong> </span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoredRole.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SystemUser.LastName)
+            </td>
+            <td>
+
+                <button class="btn btn-searching"
+                        onclick="location.href='@Url.Action("Edit", "Roles", new { id = item.RoleID })'">
+                    Edit Role
+                </button>
+
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.RoleID })*@
+
+                @*@Html.ActionLink("Details", "Details", new { id=item.RoleID }) |*@
+
+                <button class="btn btn-searching"
+                        onclick="location.href='@Url.Action("Delete", "Roles", new { id = item.RoleID })'">
+                    Delete Role
+                </button>
+
+
+                @*@Html.ActionLink("Delete", "Delete", new { id=item.RoleID })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

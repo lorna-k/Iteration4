@@ -1,0 +1,289 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.Goal>
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>History</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by objective title, type or appraisal end date: @Html.TextBox("SearchString")
+
+
+        @*<input class="btn btn-searching" type="submit" value="Search" />*@
+
+
+    </p>
+
+
+    <div class="form-horizontal">
+        <div class="form-group form-group-sm">
+            <div class="col-md-8">
+                <p>  Start Date: @Html.TextBox("start", null, new { @class = "form-control datepicker" })</p>
+</div>
+        </div>
+        <div class="form-group form-group-sm">
+            <div class="col-md-8">
+                <p>  End Date:@Html.TextBox("end", null, new { @class = "form-control datepicker" })</p>
+            </div>
+        </div>
+        <div class="form-group-sm">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" /> <span> </span>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table table-hover">
+    <caption class="display-caption">
+        Training Objectives
+    </caption>
+
+    
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Objective.Title)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.SystemUser.LastName)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                 <span class="display-header">@Html.DisplayNameFor(model => model.Appraisal.AppraisalEndDate)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Weight)</span>
+            </th>
+            <th style="padding-top: 2em">
+                <span class="display-header">@Html.DisplayNameFor(model => model.ManagerComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.EmployeeComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.GoalStatus)</span>
+            </th>
+           
+           
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        if (item.Objective.ObjectiveType == ApplicationPerformance.Models.ObjectiveType.Training)
+        {
+            if (item.Appraisal.AppraisalEndDate < DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Complete)
+            {
+            <tr>  
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objective.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SystemUser.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appraisal.AppraisalEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerComment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeComment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoalStatus)
+                </td>
+              
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GoalID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.GoalID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GoalID })
+                </td>
+            </tr>
+            }
+        }
+    }
+ 
+</table>
+
+
+
+<table class="table table-hover">
+    <caption class="display-caption">
+        General Objectives
+    </caption>
+
+
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Weight)</span>
+            </th>
+            <th style="padding-top: 2em">
+                <span class="display-header">@Html.DisplayNameFor(model => model.ManagerComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.EmployeeComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.GoalStatus)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Appraisal.AppraisalEndDate)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Objective.Title)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.SystemUser.LastName)</span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        if (item.Objective.ObjectiveType == ApplicationPerformance.Models.ObjectiveType.General)
+        {
+            if (item.Appraisal.AppraisalEndDate < DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Complete)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManagerComment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeComment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GoalStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Appraisal.AppraisalEndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Objective.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SystemUser.LastName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.GoalID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.GoalID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.GoalID })
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+</table>
+
+
+
+<table class="table table-hover">
+    <caption class="display-caption">
+        Long Term Objectives
+    </caption>
+
+
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Weight)</span>
+            </th>
+            <th style="padding-top: 2em">
+                <span class="display-header">@Html.DisplayNameFor(model => model.ManagerComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.EmployeeComment)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.GoalStatus)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Appraisal.AppraisalEndDate)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.Objective.Title)</span>
+            </th>
+            <th style="padding-top: 2em">
+
+                <span class="display-header">@Html.DisplayNameFor(model => model.SystemUser.LastName)</span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        if (item.Objective.ObjectiveType == ApplicationPerformance.Models.ObjectiveType.Long_term)
+        {
+            if (item.Appraisal.AppraisalEndDate < DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Complete)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManagerComment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeComment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GoalStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Appraisal.AppraisalEndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Objective.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SystemUser.LastName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.GoalID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.GoalID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.GoalID })
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+</table>
+
+<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("SelectedEmployee", new { id = @ViewBag.ID })'">Back to Employee Page</button>
+
+

@@ -1,0 +1,151 @@
+﻿@model ApplicationPerformance.Models.Evaluation
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<br />
+
+<h2>Evaluate @ViewBag.FirstName @ViewBag.LastName </h2>
+
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+
+    <div class="col-md-6">
+
+    <div style="border:5px solid #266f91; background-color:#266f91; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+        <p style="color:white;text-align:center;"><strong> 
+           Complete Objectives: @ViewBag.CompleteGoals
+            
+            </strong></p>
+    </div>
+
+    <div style="border:5px solid #60c3ad; background-color:#60c3ad; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+        <p><strong>
+            Total Objectives: @ViewBag.TotalGoals
+              
+            </strong></p>
+    </div>
+        <div class="col-md-3">
+
+        </div>
+ </div>
+
+    </div>
+
+        <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Index", "Evaluations")'">Evaluations History</button>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+               
+             
+                <div class="form-group" style="align-items:center; background-color:azure">
+                    <br />
+
+
+
+                    <h4 style="text-align:center">Incomplete Objectives</h4>
+                    @foreach (var item in ViewBag.InCompleteGoalsList)
+                    {
+                      <p style="text-align:center"> @item </p> 
+
+                    }
+                    <br />
+                </div>
+
+                <div class="row" >
+
+                    <div class="col-md-3">
+
+                    </div>
+
+
+                    <div class="col-md-3">
+                        @*@Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <h4 style="text-align:left">Manager Comments</h4>
+                            @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                    </div>
+
+                
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10" style="margin-bottom:15px">
+                            @Html.EnumDropDownListFor(model => model.Rating, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                        </div>
+                        
+                        @Html.LabelFor(model => model.EvaluationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.EvaluationDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EvaluationDate, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                </div>
+                
+            </div>
+
+
+
+    @*<h4>Evaluation</h4>*@
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.SystemUserID, "Employee", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SystemUserID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SystemUserID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+       
+    </div>
+
+    <div class="form-group">
+      
+    </div>
+
+        <div class="row">
+            @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.EvalID })'">Back to Employee Page</button>*@
+           <div class="col-md-1">
+
+             <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })'">Back to Dashboard</button>
+               
+            </div>
+            
+            <div class="col-md-10">
+
+            </div>
+
+             <div class="col-md-1">
+                 
+                    @*<input type="submit" value="Create" class="btn btn-searching" />*@
+                 @*<div class="form-group">*@
+                     <div class="col-md-offset-2 col-md-10">
+                         <input type="submit" value="Create" class="btn btn-searching" />
+                     </div>
+                 </div>
+
+                </div>
+            @*</div>*@
+
+@*<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-searching" />
+    </div>
+</div>*@
+
+        }

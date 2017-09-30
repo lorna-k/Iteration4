@@ -1,0 +1,298 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.Goal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<br />
+<h2> @ViewBag.FirstName @ViewBag.LastName's Appraisal Plan</h2>
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by objective title, type or status: @Html.TextBox("SearchString")
+        <input class="btn btn-searching" type="submit" value="Search" />
+    </p>
+} 
+@*ERROR HAPPENS WHEN VIEWBAG.IMAGE IS NULL*@
+
+<div class="col-md-6 main-content" style="margin-right:50px;">
+    <button class="ObjectiveButton" id="close" style="width:250px;height:155px;margin-left:10px;margin-bottom:10px;background-color:white;border:solid;border-color:#266f91;" onclick="location.href='@Url.Action("Create")'" /> <img src="~/Content/Pictures/NewObjective.png" style="height:25px;width:25px" /> <br /> Assign Objective </button>
+    <button class="ObjectiveButton" id="close" style="width:250px;height:155px;margin-left:10px;margin-bottom:10px;background-color:white;border:solid;border-color:#266f91;" onclick="location.href='@Url.Action("CreateUnique")'"> <img src="~/Content/Pictures/NewObjective.png" style="height:25px;width:25px" />  <br /> Add New Objective </button>
+
+
+    @foreach (var item in Model)
+    {
+        //Current date has not passed
+        if (item.Appraisal.AppraisalEndDate >= DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Complete)
+
+        {
+
+
+            <button class="ObjectiveButton" id="close" style="width:512px;height:80px;margin-left:10px; margin-bottom:10px; background-color:#266f91; border: none; color:white; padding-bottom:20px; padding-top:20px;"
+                    onclick="location.href='@Url.Action("Edit", new { id = item.GoalID })'">
+                <div style="text-align:right;color:red;position:relative;"> @Html.ActionLink(" ", "Delete", new { id = item.GoalID }) <img src="~/Content/Pictures/Trash.png" height="25" width="25" />  </div>
+       
+                 <strong>@Html.DisplayFor(modelItem => item.Objective.Title) </strong> 
+            </button>
+
+
+        }
+
+        //Current date has not passed
+        if (item.Appraisal.AppraisalEndDate >= DateTime.Now.Date && item.GoalStatus == null)
+
+        {
+            <button class="ObjectiveButton" id="close" style="width:512px;height:80px;margin-left:10px; margin-bottom:10px; background-color:#005275; border: none; color:white; padding-bottom:20px; padding-top:20px;"
+                    onclick="location.href='@Url.Action("Edit", new { id = item.GoalID })'">
+                <div style="text-align:right;color:red;position:relative;"> @Html.ActionLink(" ", "Delete", new { id = item.GoalID }) <img src="~/Content/Pictures/Trash.png" height="25" width="25" />  </div>
+                <div style="text-align:left;"> <strong>@Html.DisplayFor(modelItem => item.Objective.Title) </strong> </div>
+            </button>
+
+        }
+
+
+        //Current date has not passed
+        if (item.Appraisal.AppraisalEndDate <= DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Incomplete)
+
+        {
+            <button class="ObjectiveButton" id="close" style="width:512px; height:80px;margin-left:10px; margin-bottom:10px; background-color:#7f5a84; border: none; color:white; padding-bottom:20px; padding-top:20px;"
+                    onclick="location.href='@Url.Action("Edit", new { id = item.GoalID })'">
+                <div style="text-align:right;color:red;position:relative;"> @Html.ActionLink(" ", "Delete", new { id = item.GoalID }) <img src="~/Content/Pictures/Trash.png" height="25" width="25" />  </div>
+                <div style="text-align:left;"> <strong>@Html.DisplayFor(modelItem => item.Objective.Title) </strong> </div>
+
+            </button>
+        }
+
+        //Current date has passed
+        if (item.Appraisal.AppraisalEndDate >= DateTime.Now.Date && item.GoalStatus == ApplicationPerformance.Models.GoalStatus.Incomplete)
+
+        {
+            <button class="ObjectiveButton" id="close" style="width:512px;height:80px;margin-left:10px; margin-bottom:10px; background-color:#60c3ad; border: none; color:white; padding-bottom:20px; padding-top:20px;"
+                    onclick="location.href='@Url.Action("Edit", new { id = item.GoalID })'">
+                <div style="text-align:right;color:red;position:relative;"> @Html.ActionLink(" ", "Delete", new { id = item.GoalID }) <img src="~/Content/Pictures/Trash.png" height="25" width="25" />  </div>
+                <div style="text-align:center;"> <strong>@Html.DisplayFor(modelItem => item.Objective.Title) </strong> </div>
+            </button>
+        }
+
+        //Current date has passed
+        if (item.Appraisal.AppraisalEndDate >= DateTime.Now.Date && item.GoalStatus == null)
+
+        {
+            <button class="ObjectiveButton" id="close" style="width:512px;height:80px;margin-left:10px; margin-bottom:10px; background-color:#266f91; border: none; color:white; padding-bottom:20px; padding-top:20px;"
+                    onclick="location.href='@Url.Action("Edit", new { id = item.GoalID })'">
+                <div style="text-align:right;color:red;position:relative;"> @Html.ActionLink(" ", "Delete", new { id = item.GoalID }) <img src="~/Content/Pictures/Trash.png" height="25" width="25" />  </div>
+                <div style="text-align:center;"> <strong>@Html.DisplayFor(modelItem => item.Objective.Title) </strong> </div>
+            </button>
+        }
+    }
+
+
+</div>
+
+
+<div class="col-lg-3 side-panel" style="border: 1px solid #deddde;">
+    <div class="row">
+
+        <div class="col-sm-3"></div>
+        @*<img src="/Content/Pictures/Emma.png" height="120" width="120" />*@
+        <img src="@Url.Content(@ViewBag.Image)" height="120" width="160" style="margin-bottom:15px;margin-top:15px;"/>
+        <br />
+        <button class="btn btn-searching" style="margin-bottom:10px; margin-left:50px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("History", "Goals")'">View History</button>
+          <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Create", "SendEmails")'">Send Email</button>
+
+    </div>
+    <div class="row ">
+        <strong>
+            @*@ViewBag.LastName @ViewBag.FirstName*@
+        </strong><br />
+        <strong>
+            @ViewBag.EmployeeRating
+        </strong><br />
+        <h5 class="job-title" style="font-family:Gotham Medium"></h5> <br />
+        @*<img src="~/Content/Pictures/email-icon.png" height="25" width="25" />*@
+        @if (Session["manager"] != null)
+        {
+            @*<p>
+                    @Html.ActionLink("Send Email", "Create", "SendEmails")
+                </p>*@
+            @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Create", "Evaluations")'">Evaluate Employee</button>*@
+            //new { id = @ViewBag.ID})'">Rate Employee</button>
+            @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Index", "Evaluations")'">Evaluations History</button>*@
+
+
+        }
+        @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("CreateUnique")'">Create Unique Objective</button>*@
+
+
+
+    </div>
+    @*<div class="row">
+        <div style="border:5px solid #a7a9ac; height: 120px; width:120px; background-color:#edeeee; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Number of Objectives: @ViewBag.NumberOfGoals</strong></p>
+        </div>*@
+
+
+        <p style="text-align:center"><strong>Number of Objectives: @ViewBag.NumberOfGoals</strong></p>
+        @*<div style="border:5px solid #266f91; background-color:#266f91; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p style="color:white;text-align:center;"><strong> Complete: @ViewBag.NumberOfCompleteGoals</strong></p>
+        </div>*@
+
+        @*<button class="ObjectiveButton" id="close" style="width:250px;height:155px;margin-left:10px; margin-bottom:10px; background-color:#60c3ad; border: none; color:white; padding-bottom:20px; padding-top:20px;">
+        <div style="text-align:center;color:white;position:relative;">
+            <h2> Complete: <br /> @ViewBag.NumberOfCompleteGoals </h2>
+        </div>
+        </button>*@
+
+        <br />
+        <script type="text/javascript">
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer",
+	{
+	  
+                animationEnabled: true,     
+		data: [
+		{        
+		    type: "doughnut",
+			startAngle: 60,                          
+			//toolTipContent: "{legendText}: {y} - <strong>#percent% </strong>", 					
+			//showInLegend: true,
+			dataPoints: [
+				@*{y: @ViewBag.NumberOfGoals, indexLabel: "Objectives " + @ViewBag.NumberOfGoals, legendText: "Total Objectives" },*@
+				{y: @ViewBag.NumberOfCompleteGoals, indexLabel: "Completed " + @ViewBag.NumberOfCompleteGoals, legendText: "Completed Goals" },
+				{y: @ViewBag.OngoingGoals,  indexLabel: "Incomplete " + @ViewBag.OngoingGoals, legendText: "Others" }			
+			]
+		}
+		]
+	});
+
+    var chart2 = new CanvasJS.Chart("chartContainer2",
+	{
+	  
+	    animationEnabled: true,     
+	    data: [
+		{        
+		    type: "column",
+		    startAngle: 60,                          
+		    //toolTipContent: "{legendText}: {y} - <strong>#percent% </strong>", 					
+		    //showInLegend: true,
+		    dataPoints: [
+				@*{y: @ViewBag.NumberOfGoals, indexLabel: "Objectives " + @ViewBag.NumberOfGoals, legendText: "Total Objectives" },*@
+				{y: @ViewBag.NumberOfCompleteGoals, indexLabel: "Completed " + @ViewBag.NumberOfCompleteGoals, legendText: "Completed Goals" },
+				{y: @ViewBag.OngoingGoals,  indexLabel: "Incomplete " + @ViewBag.OngoingGoals, legendText: "Others" }			
+		    ]
+		}
+	    ]
+	});
+
+    chart.render();
+    chart2.render();
+
+	}
+</script>
+        <script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script>
+
+<div id="chartContainer" style="height: 150px; width: 100%;"></div>
+
+    <div id="chartContainer2" style="height: 150px; width: 100%;"></div>
+    <<br />
+        @*<div style="border:5px solid #60c3ad; background-color:#60c3ad; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Incomplete: @ViewBag.OngoingGoals</strong></p>
+        </div>
+
+        @if (Session["manager"] != null)
+        { <div style="border:5px solid #e5eef2; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Not Approved: @ViewBag.EmpNotApproved</strong></p>
+        </div>*@
+
+
+        @*<div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Comments: @ViewBag.NumberOfEmpComments</strong></p>
+        </div>*@
+
+        @*}*@
+        @*@if (Session["employee"] != null)
+        { <div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Not Approved: @ViewBag.ManNotApproved</strong></p>
+        </div>*@
+
+
+        @*<div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Comments: @ViewBag.NumberOfManComments</strong></p>
+        </div>*@
+        @*}*@
+  
+</div>
+
+       
+
+
+
+    @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Complete")'">View Complete Objectives:  @ViewBag.TestingComplete</button>*@
+
+
+    @* Modal popup code -------------------------------------------------------------------------------------------------------------------------*@
+    @*<input type="button" id="btnpopu" value="Open Modeless popup" onclick="ShowPopup();" />
+
+    <script type="text/javascript">
+
+        ShowPopup = function () {
+            window.showModalDialog('/Goals/Complete', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
+            //window.showModalDialog('/Goal/Complete', "WindowPopup", 'width=400px,height=400px');
+        }
+
+    </script>*@
+
+    @* Modal popup code -------------------------------------------------------------------------------------------------------------------------*@
+
+
+
+    @*<p>@ViewBag.NumberOfGoals</p>
+        <p>@ViewBag.NumberOfCompleteGoals</p>*@
+
+
+    @*<button id="opener">Rate Employee</button>*@
+
+
+    @*@Html.Partial("~/Views/SystemUsers/_Rating.cshtml", new ApplicationPerformance.Models.SystemUser())*@
+    @*@Html.ActionLink("Assign Rating", "Rating", "SystemUsers")*@
+    @*<p>
+        @Html.ActionLink("Create Unique Objective", "CreateUnique")
+    </p>*@
+
+    @*@Html.ActionLink("History", "History", "Goals")*@
+
+   
+
+    @*@Html.ActionLink("Details", "Details", new { id = item.GoalID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.GoalID })*@
+
+
+    @*<table class="table table-hover">
+
+        <caption class="display-caption" style="text-align:center;">
+            OBJECTIVES FOR CURRENT PERIOD
+        </caption>
+    </table>*@
+
+
+
+    @*<table class="table">*@
+
+
+    @*</table>*@
+
+<div class="row" style="margin-top:50px;">
+
+    @if (Session["manager"] != null)
+    {
+
+        <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })'">Back to Dashboard</button>
+
+
+    }
+</div>
+
+

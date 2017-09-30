@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Incomplete";
+}
+
+<h2>Incomplete</h2>
+
+
+@foreach (var item in @ViewBag.ListOfIncompleteGoals)
+{
+    <p>@item</p>
+}

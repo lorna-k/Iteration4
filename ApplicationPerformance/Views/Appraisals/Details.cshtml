@@ -1,0 +1,42 @@
+﻿@model ApplicationPerformance.Models.Appraisal
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Appraisal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppraisalEndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppraisalEndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppraisalStartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppraisalStartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppraisalStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppraisalStatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AppraisalID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

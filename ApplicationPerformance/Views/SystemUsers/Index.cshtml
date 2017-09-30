@@ -1,0 +1,222 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.SystemUser>
+
+@{
+    ViewBag.Title = "Administrative Control";
+}
+
+<h2>Administrative Control</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by first, last name or assigned manager: @Html.TextBox("SearchString")
+        <input class="btn btn-searching" type="submit" value="Search" />
+    </p>
+}
+@*<p>
+    @Html.ActionLink("Create", "Create")
+</p>*@
+<button style="text-align:center" class="btn btn-searching"
+        onclick="location.href='@Url.Action("Create")'">
+    Create User
+
+</button>
+
+<div class="row" style="margin-bottom:25px">
+
+    <div class="col-md-10">
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button style="text-align:center" class="btn btn-searching"
+                onclick="location.href='@Url.Action("Index","Appraisals")'">
+            Manage Appraisal periods
+
+        </button>
+
+
+
+    </div>
+
+    <table class="table table-hover" style="margin-top:50px">
+
+        <caption class="display-caption" style="text-align:center;">
+
+            List of all Users
+        </caption>
+
+   
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>First Name</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Last Name</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>Username</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Job Title</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>Assigned Manage</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Email</strong> </span>
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+
+
+            @*<th>*@
+                @*@Html.DisplayNameFor(model => model.ManagerPosition)*@
+                @*<strong>Role</strong>
+            </th>*@
+
+            @*<th>
+
+                @*<strong>Role</strong>*@
+            @*</th>*@
+
+
+           
+
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                 </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedManager)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ManagerPosition)
+                    </td>*@
+
+                <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                @*<td>*@
+                    @*@Html.DisplayFor(modelItem => item.UserImage)*@
+                @*</td>*@
+
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.SystemUserID }) |*@
+
+                    <button class="btn btn-searching" style="text-align:center;text-size-adjust:50%; width:200px;height:25px;"
+                            onclick="location.href='@Url.Action("Edit", "SystemUsers", new { id = item.SystemUserID })'">
+                        Edit User
+                    </button>
+                    @*<br />
+                    <br />
+                    
+                    <button class="btn btn-searching" style="text-align:center;text-size-adjust:50%; width:200px;height:25px;"
+                            onclick="location.href='@Url.Action("Index", "Roles")'">
+                        Edit Role
+                    </button>*@
+                    @*<button class="btn btn-searching" style="text-align:center; width:55px;height:25px;"
+                            onclick="location.href='@Url.Action("Details", "SystemUsers", new { id = item.SystemUserID })'">
+                        Details
+                    </button>
+
+                    <button class="btn btn-searching" style="text-align:center; width:100px;height:25px;"
+                            onclick="location.href='@Url.Action("Delete", "SystemUsers", new { id = item.SystemUserID })'">
+                        Delete
+                    </button>*@
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    @*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssignedManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManagerPosition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserImage)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedManager)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerPosition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserImage)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SystemUserID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SystemUserID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SystemUserID })
+                </td>
+            </tr>
+        }
+
+    </table>*@

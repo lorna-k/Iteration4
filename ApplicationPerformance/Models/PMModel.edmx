@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabasePMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appraisal">
+          <Key>
+            <PropertyRef Name="AppraisalID" />
+          </Key>
+          <Property Name="AppraisalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppraisalStartDate" Type="datetime" />
+          <Property Name="AppraisalEndDate" Type="datetime" />
+          <Property Name="AppraisalStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="EvaluationID" />
+          </Key>
+          <Property Name="EvaluationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="SystemUserID" Type="int" Nullable="false" />
+          <Property Name="EvaluationDate" Type="datetime" Nullable="false" />
+          <Property Name="CompleteObjectives" Type="int" />
+          <Property Name="TotalObjectives" Type="int" />
+          <Property Name="ManagerComment" Type="nvarchar(max)" />
+          <Property Name="EmployeeComment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Goal">
+          <Key>
+            <PropertyRef Name="GoalID" />
+          </Key>
+          <Property Name="GoalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManagerComment" Type="nvarchar(max)" />
+          <Property Name="EmployeeComment" Type="nvarchar(max)" />
+          <Property Name="ObjectiveID" Type="int" />
+          <Property Name="SystemUserID" Type="int" Nullable="false" />
+          <Property Name="AppraisalID" Type="int" Nullable="false" />
+          <Property Name="GoalStatus" Type="int" />
+          <Property Name="Weight" Type="int" />
+          <Property Name="ManagerApproval" Type="int" />
+          <Property Name="EmployeeApproval" Type="int" />
+          <Property Name="FinalApproval" Type="int" />
+          <Property Name="ConfidentialTitle" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Objective">
+          <Key>
+            <PropertyRef Name="ObjectiveID" />
+          </Key>
+          <Property Name="ObjectiveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="ObjectiveDescription" Type="nvarchar(max)" />
+          <Property Name="ObjectiveType" Type="int" />
+          <Property Name="Confidentiality" Type="int" />
+        </EntityType>
+        <EntityType Name="Response">
+          <Key>
+            <PropertyRef Name="ResponseID" />
+          </Key>
+          <Property Name="ResponseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SystemUserID" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="ManagerComment" Type="nvarchar(max)" />
+          <Property Name="EmployeeComment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SystemUserID" Type="int" />
+          <Property Name="StoredRoleID" Type="int" />
+        </EntityType>
+        <EntityType Name="SendEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailBody" Type="nvarchar(max)" />
+          <Property Name="EmailSubject" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailCC" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailBCC" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StoredRole">
+          <Key>
+            <PropertyRef Name="StoredRoleID" />
+          </Key>
+          <Property Name="StoredRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="SystemUserID" />
+          </Key>
+          <Property Name="SystemUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="200" />
+          <Property Name="AssignedManager" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="SystemUserImage" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Evaluation_dbo_SystemUser_SystemUserID">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Goal_dbo_Appraisal_AppraisalID">
+          <End Role="Appraisal" Type="Self.Appraisal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Goal" Type="Self.Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appraisal">
+              <PropertyRef Name="AppraisalID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="AppraisalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Goal_dbo_Objective_ObjectiveID">
+          <End Role="Objective" Type="Self.Objective" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Goal" Type="Self.Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objective">
+              <PropertyRef Name="ObjectiveID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="ObjectiveID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Goal_dbo_SystemUser_SystemUserID">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Goal" Type="Self.Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Response_dbo_SystemUser_SystemUserID">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Response" Type="Self.Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Role_dbo_StoredRole_StoredRoleID">
+          <End Role="StoredRole" Type="Self.StoredRole" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoredRole">
+              <PropertyRef Name="StoredRoleID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="StoredRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Role_dbo_SystemUser_SystemUserID">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabasePMModelStoreContainer">
+          <EntitySet Name="Appraisal" EntityType="Self.Appraisal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluation" EntityType="Self.Evaluation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Goal" EntityType="Self.Goal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objective" EntityType="Self.Objective" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Response" EntityType="Self.Response" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SendEmail" EntityType="Self.SendEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoredRole" EntityType="Self.StoredRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Evaluation_dbo_SystemUser_SystemUserID" Association="Self.FK_dbo_Evaluation_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="Evaluation" EntitySet="Evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Goal_dbo_Appraisal_AppraisalID" Association="Self.FK_dbo_Goal_dbo_Appraisal_AppraisalID">
+            <End Role="Appraisal" EntitySet="Appraisal" />
+            <End Role="Goal" EntitySet="Goal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Goal_dbo_Objective_ObjectiveID" Association="Self.FK_dbo_Goal_dbo_Objective_ObjectiveID">
+            <End Role="Objective" EntitySet="Objective" />
+            <End Role="Goal" EntitySet="Goal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Goal_dbo_SystemUser_SystemUserID" Association="Self.FK_dbo_Goal_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="Goal" EntitySet="Goal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Response_dbo_SystemUser_SystemUserID" Association="Self.FK_dbo_Response_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="Response" EntitySet="Response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Role_dbo_StoredRole_StoredRoleID" Association="Self.FK_dbo_Role_dbo_StoredRole_StoredRoleID">
+            <End Role="StoredRole" EntitySet="StoredRole" />
+            <End Role="Role" EntitySet="Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Role_dbo_SystemUser_SystemUserID" Association="Self.FK_dbo_Role_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="Role" EntitySet="Role" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabasePMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DatabasePMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SystemUsers" EntityType="DatabasePMModel.SystemUser" />
+          <EntitySet Name="Roles" EntityType="DatabasePMModel.Role" />
+          <EntitySet Name="StoredRoles" EntityType="DatabasePMModel.StoredRole" />
+          <AssociationSet Name="FK_dbo_Role_dbo_StoredRole_StoredRoleID" Association="DatabasePMModel.FK_dbo_Role_dbo_StoredRole_StoredRoleID">
+            <End Role="StoredRole" EntitySet="StoredRoles" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Role_dbo_SystemUser_SystemUserID" Association="DatabasePMModel.FK_dbo_Role_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="Appraisals" EntityType="DatabasePMModel.Appraisal" />
+          <EntitySet Name="Goals" EntityType="DatabasePMModel.Goal" />
+          <AssociationSet Name="FK_dbo_Goal_dbo_Appraisal_AppraisalID" Association="DatabasePMModel.FK_dbo_Goal_dbo_Appraisal_AppraisalID">
+            <End Role="Appraisal" EntitySet="Appraisals" />
+            <End Role="Goal" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Goal_dbo_SystemUser_SystemUserID" Association="DatabasePMModel.FK_dbo_Goal_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+            <End Role="Goal" EntitySet="Goals" />
+          </AssociationSet>
+          <EntitySet Name="SendEmails" EntityType="DatabasePMModel.SendEmail" />
+          <EntitySet Name="Responses" EntityType="DatabasePMModel.Response" />
+          <AssociationSet Name="FK_dbo_Response_dbo_SystemUser_SystemUserID" Association="DatabasePMModel.FK_dbo_Response_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+            <End Role="Response" EntitySet="Responses" />
+          </AssociationSet>
+          <EntitySet Name="Evaluations" EntityType="DatabasePMModel.Evaluation" />
+          <AssociationSet Name="FK_dbo_Evaluation_dbo_SystemUser_SystemUserID" Association="DatabasePMModel.FK_dbo_Evaluation_dbo_SystemUser_SystemUserID">
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+            <End Role="Evaluation" EntitySet="Evaluations" />
+          </AssociationSet>
+          <EntitySet Name="Objectives" EntityType="DatabasePMModel.Objective" />
+          <AssociationSet Name="FK_dbo_Goal_dbo_Objective_ObjectiveID" Association="DatabasePMModel.FK_dbo_Goal_dbo_Objective_ObjectiveID">
+            <End Role="Objective" EntitySet="Objectives" />
+            <End Role="Goal" EntitySet="Goals" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="SystemUserID" />
+          </Key>
+          <Property Name="SystemUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedManager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Roles" Relationship="DatabasePMModel.FK_dbo_Role_dbo_SystemUser_SystemUserID" FromRole="SystemUser" ToRole="Role" />
+          <NavigationProperty Name="Goals" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_SystemUser_SystemUserID" FromRole="SystemUser" ToRole="Goal" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Responses" Relationship="DatabasePMModel.FK_dbo_Response_dbo_SystemUser_SystemUserID" FromRole="SystemUser" ToRole="Response" />
+          <NavigationProperty Name="Evaluations" Relationship="DatabasePMModel.FK_dbo_Evaluation_dbo_SystemUser_SystemUserID" FromRole="SystemUser" ToRole="Evaluation" />
+          <Property Name="SystemUserImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SystemUserID" Type="Int32" />
+          <Property Name="StoredRoleID" Type="Int32" />
+          <NavigationProperty Name="StoredRole" Relationship="DatabasePMModel.FK_dbo_Role_dbo_StoredRole_StoredRoleID" FromRole="Role" ToRole="StoredRole" />
+          <NavigationProperty Name="SystemUser" Relationship="DatabasePMModel.FK_dbo_Role_dbo_SystemUser_SystemUserID" FromRole="Role" ToRole="SystemUser" />
+        </EntityType>
+        <EntityType Name="StoredRole">
+          <Key>
+            <PropertyRef Name="StoredRoleID" />
+          </Key>
+          <Property Name="StoredRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Roles" Relationship="DatabasePMModel.FK_dbo_Role_dbo_StoredRole_StoredRoleID" FromRole="StoredRole" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_dbo_Role_dbo_StoredRole_StoredRoleID">
+          <End Type="DatabasePMModel.StoredRole" Role="StoredRole" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoredRole">
+              <PropertyRef Name="StoredRoleID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="StoredRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Role_dbo_SystemUser_SystemUserID">
+          <End Type="DatabasePMModel.SystemUser" Role="SystemUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="Status">
+          <Member Name="Complete" Value="1" />
+          <Member Name="Incomplete" Value="2" />
+        </EnumType>
+        <EnumType Name="ObjectiveStatus">
+          <Member Name="Incomplete" />
+          <Member Name="Complete" />
+        </EnumType>
+        <EntityType Name="Appraisal">
+          <Key>
+            <PropertyRef Name="AppraisalID" />
+          </Key>
+          <Property Name="AppraisalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppraisalEndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Goals" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_Appraisal_AppraisalID" FromRole="Appraisal" ToRole="Goal" />
+          <Property Name="AppraisalStartDate" Type="DateTime" Precision="3" />
+          <Property Name="AppraisalStatus" Type="DatabasePMModel.AppraisalStatus" />
+        </EntityType>
+        <EntityType Name="Goal">
+          <Key>
+            <PropertyRef Name="GoalID" />
+          </Key>
+          <Property Name="GoalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManagerComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectiveID" Type="Int32" />
+          <Property Name="SystemUserID" Type="Int32" Nullable="false" />
+          <Property Name="AppraisalID" Type="Int32" Nullable="false" />
+          <Property Name="GoalStatus" Type="DatabasePMModel.GoalStatus" />
+          <NavigationProperty Name="Appraisal" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_Appraisal_AppraisalID" FromRole="Goal" ToRole="Appraisal" />
+          <NavigationProperty Name="SystemUser" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_SystemUser_SystemUserID" FromRole="Goal" ToRole="SystemUser" />
+          <Property Name="Weight" Type="Int32" />
+          <Property Name="ManagerApproval" Type="DatabasePMModel.ManagerApproval" />
+          <Property Name="EmployeeApproval" Type="DatabasePMModel.EmployeeApproval" />
+          <Property Name="FinalApproval" Type="DatabasePMModel.FinalApproval" />
+          <Property Name="ConfidentialTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Objective" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_Objective_ObjectiveID" FromRole="Goal" ToRole="Objective" />
+        </EntityType>
+        <Association Name="FK_dbo_Goal_dbo_Appraisal_AppraisalID">
+          <End Type="DatabasePMModel.Appraisal" Role="Appraisal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Goal" Role="Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appraisal">
+              <PropertyRef Name="AppraisalID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="AppraisalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Goal_dbo_SystemUser_SystemUserID">
+          <End Type="DatabasePMModel.SystemUser" Role="SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Goal" Role="Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="GoalStatus">
+          <Member Name="Complete" />
+          <Member Name="Incomplete" />
+        </EnumType>
+        <EntityType Name="SendEmail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailSubject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailCC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailBCC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Response">
+          <Key>
+            <PropertyRef Name="ResponseID" />
+          </Key>
+          <Property Name="ResponseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SystemUserID" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="DatabasePMModel.Rating" />
+          <Property Name="ManagerComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SystemUser" Relationship="DatabasePMModel.FK_dbo_Response_dbo_SystemUser_SystemUserID" FromRole="Response" ToRole="SystemUser" />
+        </EntityType>
+        <Association Name="FK_dbo_Response_dbo_SystemUser_SystemUserID">
+          <End Type="DatabasePMModel.SystemUser" Role="SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Response" Role="Response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Response">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="AppraisalStatus">
+          <Member Name="Previous" />
+          <Member Name="Current" />
+          <Member Name="Future" />
+        </EnumType>
+        <EnumType Name="EmployeeRating">
+          <Member Name="Good" />
+          <Member Name="Average" />
+          <Member Name="Bad" />
+        </EnumType>
+        <EntityType Name="Evaluation">
+          <Key>
+            <PropertyRef Name="EvaluationID" />
+          </Key>
+          <Property Name="EvaluationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rating" Type="DatabasePMModel.Rating" />
+          <Property Name="SystemUserID" Type="Int32" Nullable="false" />
+          <Property Name="EvaluationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompleteObjectives" Type="Int32" />
+          <Property Name="TotalObjectives" Type="Int32" />
+          <NavigationProperty Name="SystemUser" Relationship="DatabasePMModel.FK_dbo_Evaluation_dbo_SystemUser_SystemUserID" FromRole="Evaluation" ToRole="SystemUser" />
+          <Property Name="ManagerComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_Evaluation_dbo_SystemUser_SystemUserID">
+          <End Type="DatabasePMModel.SystemUser" Role="SystemUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Evaluation" Role="Evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="Evaluation">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="Rating">
+          <Member Name="Poor" />
+          <Member Name="Average" />
+          <Member Name="Good" />
+        </EnumType>
+        <EnumType Name="ManagerApproval">
+          <Member Name="Approved" />
+          <Member Name="Not_Approved" />
+        </EnumType>
+        <EnumType Name="EmployeeApproval">
+          <Member Name="Approved" />
+          <Member Name="Not_Approved" />
+        </EnumType>
+        <EnumType Name="FinalApproval">
+          <Member Name="Approved" />
+          <Member Name="Not_Approved" />
+        </EnumType>
+        <EntityType Name="Objective">
+          <Key>
+            <PropertyRef Name="ObjectiveID" />
+          </Key>
+          <Property Name="ObjectiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectiveDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectiveType" Type="DatabasePMModel.ObjectiveType" />
+          <Property Name="Confidentiality" Type="DatabasePMModel.Confidentiality" />
+          <NavigationProperty Name="Goals" Relationship="DatabasePMModel.FK_dbo_Goal_dbo_Objective_ObjectiveID" FromRole="Objective" ToRole="Goal" />
+        </EntityType>
+        <Association Name="FK_dbo_Goal_dbo_Objective_ObjectiveID">
+          <End Type="DatabasePMModel.Objective" Role="Objective" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabasePMModel.Goal" Role="Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objective">
+              <PropertyRef Name="ObjectiveID" />
+            </Principal>
+            <Dependent Role="Goal">
+              <PropertyRef Name="ObjectiveID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="ObjectiveType">
+          <Member Name="Training" />
+          <Member Name="General" />
+          <Member Name="Long_term" />
+        </EnumType>
+        <EnumType Name="Confidentiality">
+          <Member Name="Confidential" />
+          <Member Name="Unrestricted" />
+        </EnumType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabasePMModelStoreContainer" CdmEntityContainer="DatabasePMEntities">
+          <EntitySetMapping Name="SystemUsers">
+            <EntityTypeMapping TypeName="DatabasePMModel.SystemUser">
+              <MappingFragment StoreEntitySet="SystemUser">
+                <ScalarProperty Name="SystemUserImage" ColumnName="SystemUserImage" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="AssignedManager" ColumnName="AssignedManager" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DatabasePMModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="StoredRoleID" ColumnName="StoredRoleID" />
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoredRoles">
+            <EntityTypeMapping TypeName="DatabasePMModel.StoredRole">
+              <MappingFragment StoreEntitySet="StoredRole">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="StoredRoleID" ColumnName="StoredRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appraisals">
+            <EntityTypeMapping TypeName="DatabasePMModel.Appraisal">
+              <MappingFragment StoreEntitySet="Appraisal">
+                <ScalarProperty Name="AppraisalStatus" ColumnName="AppraisalStatus" />
+                <ScalarProperty Name="AppraisalStartDate" ColumnName="AppraisalStartDate" />
+                <ScalarProperty Name="AppraisalEndDate" ColumnName="AppraisalEndDate" />
+                <ScalarProperty Name="AppraisalID" ColumnName="AppraisalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goals">
+            <EntityTypeMapping TypeName="DatabasePMModel.Goal">
+              <MappingFragment StoreEntitySet="Goal">
+                <ScalarProperty Name="ConfidentialTitle" ColumnName="ConfidentialTitle" />
+                <ScalarProperty Name="FinalApproval" ColumnName="FinalApproval" />
+                <ScalarProperty Name="EmployeeApproval" ColumnName="EmployeeApproval" />
+                <ScalarProperty Name="ManagerApproval" ColumnName="ManagerApproval" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="GoalStatus" ColumnName="GoalStatus" />
+                <ScalarProperty Name="AppraisalID" ColumnName="AppraisalID" />
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+                <ScalarProperty Name="ObjectiveID" ColumnName="ObjectiveID" />
+                <ScalarProperty Name="EmployeeComment" ColumnName="EmployeeComment" />
+                <ScalarProperty Name="ManagerComment" ColumnName="ManagerComment" />
+                <ScalarProperty Name="GoalID" ColumnName="GoalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SendEmails">
+            <EntityTypeMapping TypeName="DatabasePMModel.SendEmail">
+              <MappingFragment StoreEntitySet="SendEmail">
+                <ScalarProperty Name="EmailBCC" ColumnName="EmailBCC" />
+                <ScalarProperty Name="EmailCC" ColumnName="EmailCC" />
+                <ScalarProperty Name="EmailSubject" ColumnName="EmailSubject" />
+                <ScalarProperty Name="EmailBody" ColumnName="EmailBody" />
+                <ScalarProperty Name="ToEmail" ColumnName="ToEmail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responses">
+            <EntityTypeMapping TypeName="DatabasePMModel.Response">
+              <MappingFragment StoreEntitySet="Response">
+                <ScalarProperty Name="EmployeeComment" ColumnName="EmployeeComment" />
+                <ScalarProperty Name="ManagerComment" ColumnName="ManagerComment" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+                <ScalarProperty Name="ResponseID" ColumnName="ResponseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluations">
+            <EntityTypeMapping TypeName="DatabasePMModel.Evaluation">
+              <MappingFragment StoreEntitySet="Evaluation">
+                <ScalarProperty Name="EmployeeComment" ColumnName="EmployeeComment" />
+                <ScalarProperty Name="ManagerComment" ColumnName="ManagerComment" />
+                <ScalarProperty Name="TotalObjectives" ColumnName="TotalObjectives" />
+                <ScalarProperty Name="CompleteObjectives" ColumnName="CompleteObjectives" />
+                <ScalarProperty Name="EvaluationDate" ColumnName="EvaluationDate" />
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="EvaluationID" ColumnName="EvaluationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objectives">
+            <EntityTypeMapping TypeName="DatabasePMModel.Objective">
+              <MappingFragment StoreEntitySet="Objective">
+                <ScalarProperty Name="Confidentiality" ColumnName="Confidentiality" />
+                <ScalarProperty Name="ObjectiveType" ColumnName="ObjectiveType" />
+                <ScalarProperty Name="ObjectiveDescription" ColumnName="ObjectiveDescription" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ObjectiveID" ColumnName="ObjectiveID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

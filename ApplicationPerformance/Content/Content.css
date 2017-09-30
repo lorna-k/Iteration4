@@ -1,0 +1,110 @@
+﻿.header-pic{
+    /*height: 200px;
+    width:400px;*/
+    padding-bottom:25px;
+    padding-top:25px;
+}
+
+.landing-pic{
+    height: 300px;
+    width: 450px;
+}
+
+.remeber-link{
+    margin-left: 100px;
+}
+
+.logIn-button {
+    margin-left: 100px;
+    width: 150px;
+    height: 45px;
+}
+.forgot-password{
+    margin-top:150px;
+    margin-left:120px;
+}
+.btn-searching{
+    background:#00567e;
+    color:#fff;
+    
+}
+.display-caption{
+   
+   background:#00567e;
+   color:#fff;
+   font-size:15px;
+   padding: 5px 5px 5px 5px;
+   /*add more styles ...*/
+}
+.display-header{
+   
+   background:#fff;
+   color:#266f91;
+   font-size:15px;
+   padding: 5px 2px 2px 2px;
+   /*add more styles ...*/
+}
+.facesButton {
+    background-color: rgba(0, 0, 0, 0.00); /* transparent */
+    border: none;
+    color: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.EmployeeFacesButton {
+    background-color: rgba(0, 0, 0, 0.00); /* transparent */
+    border: none;
+    color: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+   
+}
+
+/*objectives*/
+.style_prevu_kit
+{
+    display:inline-block;
+    border:0;
+    width:150px;
+    height:150px;
+    position: relative;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
+
+}
+    .style_prevu_kit:hover
+     {
+        box-shadow: 0px 0px 150px #000000;
+    }
+.obj-num-display{
+    border:5px solid #cb2025; 
+    height: 150px; 
+    width:150px; 
+    border-radius:100px; 
+    text-align:center;
+    margin-right:10px;
+    display:inline-block;
+    vertical-align: middle;
+    position: relative
+}
+
+.obj-num-display p {
+    text-align:center;
+    position: absolute;               /* 2 */
+   top: 50%;                         /* 3 */
+   transform: translate(0, -50%) ;   /* 4 */
+    font-variant: small-caps
+}
+

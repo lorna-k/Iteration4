@@ -1,0 +1,161 @@
+﻿@model ApplicationPerformance.Models.Goal
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create Objective</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @*<div class="form-horizontal">*@
+
+    <h4>Goal number: </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Select Objective</strong>
+                @Html.DropDownList("ObjectiveID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ObjectiveID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Appraisal End Date</strong>
+                @Html.DropDownList("AppraisalID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AppraisalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Weight</strong>
+                 @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", min = "0", max = "5" } })
+                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Goal Status</strong>
+                @Html.EnumDropDownListFor(model => model.GoalStatus, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GoalStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+    if (Session["manager"] != null)
+    {
+
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Manager's Comments</strong>
+                @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control input-lg" } })
+                @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ManagerApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.ManagerApproval, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ManagerApproval, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FinalApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.FinalApproval, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FinalApproval, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+    }
+    if (Session["employee"] != null)
+    {
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col-md-10">
+                <strong>Employee's Comments</strong>
+                @Html.EditorFor(model => model.EmployeeComment, new { htmlAttributes = new { @class = "form-control input-lg" } })
+                @Html.ValidationMessageFor(model => model.EmployeeComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.EmployeeApproval, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EmployeeApproval, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
+
+
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.SystemUserID, "SystemUserID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SystemUserID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SystemUserID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+
+
+    <div class="row" style="padding-bottom:10px;">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-searching" />
+        </div>
+    </div>
+
+
+
+    <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.ID })'">Back to Employee Page</button>
+
+
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

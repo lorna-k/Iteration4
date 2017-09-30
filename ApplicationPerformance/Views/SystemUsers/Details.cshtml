@@ -1,0 +1,42 @@
+﻿@model ApplicationPerformance.Models.SystemUser
+
+@{
+    ViewBag.Title = "Manager's Dashboard";
+}
+
+
+<h2>Manager's Dashboard</h2>
+<div class="row emp-page-header">
+    <div class="col-md-3">
+        <img src="~/Content/Pictures/Matthew.jpg" height="120" width="150" />
+    </div>
+    <div class="col-md-3">
+        <strong>
+            @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+        </strong><br />
+        <h5 class="job-title" style="font-family:Gotham">@Html.DisplayFor(model => model.JobTitle)</h5> <br />
+        
+
+    </div>
+
+
+    <div class="col-md-6">
+        <div style="border:5px solid #a7a9ac; height: 120px; width:120px; background-color:#edeeee; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Team Size</strong></p>
+        </div>
+        <div style="border:5px solid #7f5a84; background-color:#ccbdce; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Total Goals</strong></p>
+        </div>
+        <div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
+            <p><strong>Pending Sign Off</strong></p>
+        </div>
+    </div>
+</div>
+
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SystemUserID }) |
+        @Html.ActionLink("Back to List", "Index")
+
+    </p>*@
+@Html.Action("ValidEmployees")
+

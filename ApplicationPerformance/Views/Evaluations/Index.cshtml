@@ -1,0 +1,234 @@
+﻿@model IEnumerable<ApplicationPerformance.Models.Evaluation>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Evaluations for @ViewBag.evalFirstName @ViewBag.evalLastName </h2>
+
+<br />
+
+<br />
+
+<table class="table">
+    <tr>
+        @*<th>
+                <img src="@Url.Action("MyChart")" alt="SimpleChart" />
+            </th>
+            <th>
+                <img src="/Content/Pictures/RatingKey.png" />
+            </th>*@
+        <div id="chartContainer3"></div>
+    </tr>
+</table>
+
+@using (Html.BeginForm())
+{<table class="table">
+        <tr>
+            <p>
+                Find by objective title, type or appraisal end date: @Html.TextBox("SearchString")
+
+
+                @*<input class="btn btn-searching" type="submit" value="Search" />*@
+
+
+            </p>
+
+
+            <div class="form-horizontal">
+                <div class="form-group form-group-sm">
+                    <div class="col-md-8">
+                        <p>  Start Date: @Html.TextBox("start", null, new { @class = "form-control datepicker" })</p>
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-md-8">
+                        <p>  End Date:@Html.TextBox("end", null, new { @class = "form-control datepicker" })</p>
+                    </div>
+                </div>
+                <div class="form-group-sm">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" /> <span> </span>
+                    </div>
+                </div>
+            </div>
+    </table>
+}
+
+
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+            title: {
+                text: "Evaluation Averages"
+            },
+            animationEnabled: true,
+
+            axisY: {
+                title: "Employee's Rating",
+                includeZero: false,
+                suffix: " ",
+                lineColor: "#369EAD"
+            },
+            axisY2: {
+                title: "All Employees' Ratings",
+                includeZero: false,
+                suffix: " ",
+                lineColor: "#C24642"
+            },
+            axisX: {
+                title: "Months",
+                suffix: ""
+            },
+            data: [
+            {
+                type: "spline",
+                name: "Speed",
+                dataPoints: [
+                 { x: 1, y: @ViewBag.Jan },
+                { x: 2, y: @ViewBag.Feb },
+                { x: 3, y: @ViewBag.Mar},
+                { x: 4, y: @ViewBag.Apr },
+                { x: 5, y: @ViewBag.May },
+                { x: 6, y: @ViewBag.Jun  },
+                { x: 7, y: @ViewBag.Jul  },
+                { x: 8, y: @ViewBag.Aug },
+                { x: 9, y: 2  },
+                { x: 10, y: 2  },
+                { x: 11, y: 3 },
+                { x: 12, y: 2 }
+                ]
+            },
+          
+            {
+                type: "spline",
+                axisYType: "secondary",
+                name: "Distance Covered",
+                dataPoints: [
+                { x: 1, y: 2  },
+                { x: 2, y: 2 },
+                { x: 3, y: 1 },
+                { x: 4, y: 2},
+                { x: 5, y: 2},
+                { x: 6, y: 3},
+                { x: 7, y: 1},
+                { x: 8, y: 2 },
+                { x: 9, y:  2 },
+                { x: 10, y:  1},
+                { x: 11, y:  3},
+
+                { x: 12, y:  2 }
+                ]
+            }
+            ]
+        });
+
+        chart3.render();
+    }
+</script>
+<script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script>
+
+
+
+@*<div id="chartContainer3"></div>*@
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<br />
+<br />
+<table class="table table-hover" style="margin-top:50px">
+    <caption class="display-caption" style="text-align:center;">
+        Previous Evaluations
+    </caption>
+    <thead style="border-bottom:ridge; border-color:#266f91">
+        <tr>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.StoredRole.RoleName)*@
+                <span class="display-header"> <strong>Rating</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Evaluation Date</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Complete Objectives</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Total Objectives</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Manager Comment</strong> </span>
+            </th>
+            <th style="padding-top: 2em">
+                @*@Html.DisplayNameFor(model => model.SystemUser.LastName)*@
+                <span class="display-header"> <strong>Employee Comment</strong> </span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EvaluationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompleteObjectives)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalObjectives)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerComment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeComment)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SystemUser.LastName)
+        </th>*@
+    @*<th></th>*@
+    @*</tr>*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EvaluationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompleteObjectives)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalObjectives)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeComment)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.SystemUser.LastName)
+                </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EvaluationID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EvaluationID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EvaluationID })
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.EvalID })'">Back to Employee Page</button>*@
+    <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })'">Back to Dashboard</button>
+</div>

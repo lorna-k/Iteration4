@@ -1,0 +1,50 @@
+﻿S@model ApplicationPerformance.Models.Objective
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Objective</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ObjectiveDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ObjectiveDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ObjectiveType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ObjectiveType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Confidentiality)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Confidentiality)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ObjectiveID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="543e7c50fc7a428db2d89dbe774c60c0" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="DatabasePMModel.SystemUser" Width="1.5" PointX="2.375" PointY="1.75" />
+        <EntityTypeShape EntityType="DatabasePMModel.Role" Width="1.5" PointX="2.375" PointY="6.125" />
+        <EntityTypeShape EntityType="DatabasePMModel.StoredRole" Width="1.5" PointX="4.875" PointY="6.75" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Role_dbo_StoredRole_StoredRoleID" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Role_dbo_SystemUser_SystemUserID" />
+        <EntityTypeShape EntityType="DatabasePMModel.Appraisal" Width="1.5" PointX="6.875" PointY="2" />
+        <EntityTypeShape EntityType="DatabasePMModel.Goal" Width="1.5" PointX="4.75" PointY="0.5" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Goal_dbo_Appraisal_AppraisalID" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Goal_dbo_SystemUser_SystemUserID" />
+        <EntityTypeShape EntityType="DatabasePMModel.SendEmail" Width="1.5" PointX="9" PointY="0.5" />
+        <EntityTypeShape EntityType="DatabasePMModel.Response" Width="1.5" PointX="0.5" PointY="4" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Response_dbo_SystemUser_SystemUserID" />
+        <EntityTypeShape EntityType="DatabasePMModel.Evaluation" Width="1.5" PointX="6.625" PointY="4.375" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Evaluation_dbo_SystemUser_SystemUserID" />
+        <EntityTypeShape EntityType="DatabasePMModel.Objective" Width="1.5" PointX="9.375" PointY="4.125" />
+        <AssociationConnector Association="DatabasePMModel.FK_dbo_Goal_dbo_Objective_ObjectiveID" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

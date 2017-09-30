@@ -1,0 +1,58 @@
+﻿@model ApplicationPerformance.Models.SendEmail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SendEmail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ToEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailBody)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailBody)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailSubject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailSubject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailCC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailCC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailBCC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailBCC)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

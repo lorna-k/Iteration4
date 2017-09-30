@@ -1,0 +1,74 @@
+﻿@model ApplicationPerformance.Models.Goal
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Objective</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GoalStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GoalStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Appraisal.AppraisalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Appraisal.AppraisalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Objective.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Objective.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SystemUser.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SystemUser.LastName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.GoalID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

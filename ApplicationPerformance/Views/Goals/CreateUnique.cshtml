@@ -1,0 +1,201 @@
+﻿@model ApplicationPerformance.Models.Goal
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Objective</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                valueChanged();
+            });
+            function valueChanged() {
+                if ($('#MyChk').is(":checked"))
+                    $("#confidential").show();
+                if ($('#MyChk').is(":unchecked"))
+                    $("#guideline").show();
+                if ($('#MyChk').is(":checked"))
+                    $("#guideline").hide();
+                if ($('#MyChk').is(":unchecked"))
+                    $("#confidential").hide();
+            }
+        </script>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Confidential, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Confidential, new { id = "MyChk", onchange = "valueChanged()" })
+                    @Html.ValidationMessageFor(model => model.Confidential, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            @Html.Label("Keep objective confidential")
+            <div class="col-md-10">
+                @Html.CheckBox("FlatFile", false, new { id = "MyChk", onchange = "valueChanged()" })
+            </div>
+        </div>
+        <div id="confidential">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfidentialTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ConfidentialTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfidentialTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div id="guideline">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Objective.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Objective.Title, new { htmlAttributes = new { id = "MyTxt", @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Objective.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Objective.ObjectiveDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Objective.ObjectiveDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Objective.ObjectiveDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+         
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Objective.ObjectiveType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Objective.ObjectiveType, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Objective.ObjectiveType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Objective.Confidentiality, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Objective.Confidentiality, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Objective.Confidentiality, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.SystemUserID, "SystemUserID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SystemUserID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SystemUserID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.AppraisalID, "AppraisalID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AppraisalID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AppraisalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.GoalStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.GoalStatus, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GoalStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", min = "0", max = "5" } })
+                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Session["manager"] != null)
+        {
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManagerApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.ManagerApproval, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ManagerApproval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FinalApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.FinalApproval, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FinalApproval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        @if (Session["employee"] != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeeComment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeeComment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeApproval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.EmployeeApproval, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EmployeeApproval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+
+
+
+       
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+    <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.ID })'">Back to Employee Page</button>
+
+}
+@if (TempData["alertMessage"] != null)
+{
+    <p>Goal previously set</p>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
