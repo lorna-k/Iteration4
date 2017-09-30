@@ -40,8 +40,16 @@
                     @*<p class="name-title">Name</p>*@
                     @*<a href="" target="_blank">*@
                         <div class="content-overlay"></div>
-                        <img class="content-image" src="@item.SystemUserImage" height="146" width="60">
-
+                    @if (item.SystemUserImage == null)
+                    {
+                        <img class="content-image" src="~/Content/Pictures/profile.png" height="146" width="60">
+                    }
+                    else
+                    {
+                        <img class="content-image" src="@Url.Content(item.SystemUserImage)" height="146" width="60">
+                    }
+                    
+                        
                         <div class="content-details fadeIn-bottom overlay-button">
                             <button onclick="location.href='@Url.Action("SelectedEmployee", "Goals", new { id = item.SystemUserID })'">Appraise</button>
                             <button onclick="location.href='@Url.Action("Create", "Evaluations", new { id = item.SystemUserID })'">Evaluate</button>
