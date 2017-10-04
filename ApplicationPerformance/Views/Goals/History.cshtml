@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<ApplicationPerformance.Models.Goal>
 
+
+<div class="breadcrumb" style="margin-top:15px; font-size: 13px; background: #fff; border-radius: 0; padding: 25px 12px 0 15px; color: #6e6e6f;">
+    <a href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.ID })' class="crown"><i class="icon-angle-right"></i></a><a href='@Url.Action("SelectedEmployee", "Goals", new { id = @ViewBag.ID })' class="home">Employee Appraisail Plan</a>
+    <span class="active-bc"> / History</span>
+</div>
+
 @{
     ViewBag.Title = "History";
 }
+
 
 <h2>History</h2>
 

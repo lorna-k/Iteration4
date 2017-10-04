@@ -3,25 +3,47 @@
 @{
     ViewBag.Title = "Index";
 }
+@if (Session["manager"] != null)
+{
+<div class="breadcrumb" style="margin-top:15px; font-size: 13px; background: #fff; border-radius: 0; padding: 25px 12px 0 15px; color: #6e6e6f;">
+    <a href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })' class="crown"><i class="icon-angle-right"></i></a><a href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })' class="home">My Dashboard</a>
+    <span class="active-bc"> / Employee Appraisal Plan</span>
+</div>
+}
 
-<br />
-<br />
 <h2> @ViewBag.FirstName @ViewBag.LastName's Appraisal Plan</h2>
 
 
-@using (Html.BeginForm())
-{
-    <p>
-        Find by objective title, type or status: @Html.TextBox("SearchString")
-        <input class="btn btn-searching" type="submit" value="Search" />
-    </p>
-} 
-@*ERROR HAPPENS WHEN VIEWBAG.IMAGE IS NULL*@
+<div class="col-md-6 main-content" style="margin-right:50px; border: 1px solid #deddde";>
+   
+        <div class="row">
+            <div class="col-md-5">
+                
+                <div class="dropdown col-md-2">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" style="margin-top:10px;">
+                        Add New Objective
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href='@Url.Action("Create")'>From Existing Guidelines</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href='@Url.Action("CreateUnique")'>Create New Objective</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search-textbox" style="float:right; padding:6px 45px 5px 2px;">
+                @using (Html.BeginForm())
+                {
+                    <p>
+                        @Html.TextBox("SearchString")
+                        <input class="btn btn-normal-link" type="submit" value="Search" style="12px"/>
+                    </p>
+                }
+                
+            </div>
+            <div>
 
-<div class="col-md-6 main-content" style="margin-right:50px;">
-    <button class="ObjectiveButton" id="close" style="width:250px;height:155px;margin-left:10px;margin-bottom:10px;background-color:white;border:solid;border-color:#266f91;" onclick="location.href='@Url.Action("Create")'" /> <img src="~/Content/Pictures/NewObjective.png" style="height:25px;width:25px" /> <br /> Assign Objective </button>
-    <button class="ObjectiveButton" id="close" style="width:250px;height:155px;margin-left:10px;margin-bottom:10px;background-color:white;border:solid;border-color:#266f91;" onclick="location.href='@Url.Action("CreateUnique")'"> <img src="~/Content/Pictures/NewObjective.png" style="height:25px;width:25px" />  <br /> Add New Objective </button>
-
+            </div>
+        </div>
 
     @foreach (var item in Model)
     {
@@ -193,106 +215,14 @@ window.onload = function () {
 	}
 </script>
         <script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div id="chartContainer" style="height: 150px; width: 100%;"></div>
 
     <div id="chartContainer2" style="height: 150px; width: 100%;"></div>
     <<br />
-        @*<div style="border:5px solid #60c3ad; background-color:#60c3ad; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
-            <p><strong>Incomplete: @ViewBag.OngoingGoals</strong></p>
-        </div>
-
-        @if (Session["manager"] != null)
-        { <div style="border:5px solid #e5eef2; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
-            <p><strong>Not Approved: @ViewBag.EmpNotApproved</strong></p>
-        </div>*@
-
-
-        @*<div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
-            <p><strong>Comments: @ViewBag.NumberOfEmpComments</strong></p>
-        </div>*@
-
-        @*}*@
-        @*@if (Session["employee"] != null)
-        { <div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
-            <p><strong>Not Approved: @ViewBag.ManNotApproved</strong></p>
-        </div>*@
-
-
-        @*<div style="border:5px solid #00567e; background-color:#e5eef2; height: 120px; width:120px; border-radius:100px; text-align:center;" class="obj-num-display">
-            <p><strong>Comments: @ViewBag.NumberOfManComments</strong></p>
-        </div>*@
-        @*}*@
   
 </div>
-
-       
-
-
-
-    @*<button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("Complete")'">View Complete Objectives:  @ViewBag.TestingComplete</button>*@
-
-
-    @* Modal popup code -------------------------------------------------------------------------------------------------------------------------*@
-    @*<input type="button" id="btnpopu" value="Open Modeless popup" onclick="ShowPopup();" />
-
-    <script type="text/javascript">
-
-        ShowPopup = function () {
-            window.showModalDialog('/Goals/Complete', "PopupWindow", 'width=400px,height=400px,top=150,left=250');
-            //window.showModalDialog('/Goal/Complete', "WindowPopup", 'width=400px,height=400px');
-        }
-
-    </script>*@
-
-    @* Modal popup code -------------------------------------------------------------------------------------------------------------------------*@
-
-
-
-    @*<p>@ViewBag.NumberOfGoals</p>
-        <p>@ViewBag.NumberOfCompleteGoals</p>*@
-
-
-    @*<button id="opener">Rate Employee</button>*@
-
-
-    @*@Html.Partial("~/Views/SystemUsers/_Rating.cshtml", new ApplicationPerformance.Models.SystemUser())*@
-    @*@Html.ActionLink("Assign Rating", "Rating", "SystemUsers")*@
-    @*<p>
-        @Html.ActionLink("Create Unique Objective", "CreateUnique")
-    </p>*@
-
-    @*@Html.ActionLink("History", "History", "Goals")*@
-
-   
-
-    @*@Html.ActionLink("Details", "Details", new { id = item.GoalID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.GoalID })*@
-
-
-    @*<table class="table table-hover">
-
-        <caption class="display-caption" style="text-align:center;">
-            OBJECTIVES FOR CURRENT PERIOD
-        </caption>
-    </table>*@
-
-
-
-    @*<table class="table">*@
-
-
-    @*</table>*@
-
-<div class="row" style="margin-top:50px;">
-
-    @if (Session["manager"] != null)
-    {
-
-        <button class="btn btn-searching" style="margin-bottom:10px; margin-left:10px; color:white; background-color:#266f91; border:none; padding:5px; border-radius:2px;" onclick="location.href='@Url.Action("ManagerEmployees", "SystemUsers", new { id = @ViewBag.AssignedManagerID })'">Back to Dashboard</button>
-
-
-    }
-</div>
-
+<div class="row"></div>
 

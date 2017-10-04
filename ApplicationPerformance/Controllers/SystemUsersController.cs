@@ -930,11 +930,34 @@ namespace ApplicationPerformance.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SystemUserID,LastName,FirstName,UserName,Password,PasswordSalt,AssignedManager,ManagerPosition,JobTitle,Email,SystemUserImage")] SystemUser systemUser)
+        public ActionResult Edit([Bind(Include = "SystemUserID,LastName,FirstName,UserName,Password,PasswordSalt,AssignedManager,ManagerPosition,JobTitle,Email,SystemUserImage,ImageFile")] SystemUser systemUser)
         {
+
+
+            //var currentPerson = db.SystemUsers.FirstOrDefault(p => p.SystemUserID == systemUser.SystemUserID);
+            //if (currentPerson == null)
+            //    return HttpNotFound();
+
+            //systemUser.Password = currentPerson.Password;
+            //systemUser.PasswordSalt = currentPerson.PasswordSalt;
+
+            if (systemUser.ImageFile != null)
+            {
+
+                string fileName = Path.GetFileNameWithoutExtension(systemUser.ImageFile.FileName);
+                string extension = Path.GetExtension(systemUser.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                systemUser.SystemUserImage = "~/Content/ProfileImages/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Content/ProfileImages/"), fileName);
+                systemUser.ImageFile.SaveAs(fileName);
+            }
+
             if (ModelState.IsValid)
             {
                 string manager = systemUser.AssignedManager;
+
+
                 db.Entry(systemUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
