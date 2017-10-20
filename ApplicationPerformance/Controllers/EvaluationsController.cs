@@ -16,8 +16,7 @@ namespace ApplicationPerformance.Controllers
     {
         private DatabasePMEntities db = new DatabasePMEntities();
 
-        //testing new code
-
+        //Testing new code
 
 
         #region Old index method
@@ -153,11 +152,11 @@ namespace ApplicationPerformance.Controllers
         int empDecEvaluationsCount;
 
         #endregion
-       
 
 
 
-        
+
+
         // GET: Evaluations
         public ActionResult Index(string searchString, DateTime? start, DateTime? end)
 
@@ -185,7 +184,7 @@ namespace ApplicationPerformance.Controllers
                                        .Where(x =>
                                         x.EvaluationDate >= start
                                        && x.EvaluationDate <= end
-                                       && x.SystemUser.UserName.ToUpper().Equals(user.UserName.ToUpper()))
+                                       && x.SystemUser.SystemUserID.Equals(user.SystemUserID))
                                        .OrderByDescending(x => x.EvaluationID)
                                        ;
                 }
@@ -236,6 +235,8 @@ namespace ApplicationPerformance.Controllers
                         janEvaluationsCount += 1;
                     }
                     Jan = janEvaluationsValue / janEvaluationsCount;
+
+
                     ViewBag.Jan = Jan;
                 }
 
@@ -258,7 +259,10 @@ namespace ApplicationPerformance.Controllers
                         febEvaluationsCount += 1;
                     }
                     Feb = febEvaluationsValue / febEvaluationsCount;
+
+
                     ViewBag.Feb = Feb;
+
                 }
 
 
@@ -280,7 +284,9 @@ namespace ApplicationPerformance.Controllers
                         marEvaluationsCount += 1;
                     }
                     Mar = marEvaluationsValue / marEvaluationsCount;
+
                     ViewBag.Mar = Mar;
+
                 }
 
 
@@ -303,7 +309,9 @@ namespace ApplicationPerformance.Controllers
                         aprEvaluationsCount += 1;
                     }
                     Apr = aprEvaluationsValue / aprEvaluationsCount;
+
                     ViewBag.Apr = Apr;
+
                 }
 
 
@@ -325,7 +333,9 @@ namespace ApplicationPerformance.Controllers
                         mayEvaluationsCount += 1;
                     }
                     May = mayEvaluationsValue / mayEvaluationsCount;
+
                     ViewBag.May = May;
+
                 }
 
 
@@ -348,7 +358,9 @@ namespace ApplicationPerformance.Controllers
                         junEvaluationsCount += 1;
                     }
                     Jun = junEvaluationsValue / junEvaluationsCount;
+
                     ViewBag.Jun = Jun;
+
                 }
                 else if (item.EvaluationDate.Month == 7)
                 {
@@ -369,7 +381,9 @@ namespace ApplicationPerformance.Controllers
                         julEvaluationsCount += 1;
                     }
                     Jul = julEvaluationsValue / julEvaluationsCount;
+
                     ViewBag.Jul = Jul;
+
                 }
                 else if (item.EvaluationDate.Month == 8)
                 {
@@ -389,7 +403,9 @@ namespace ApplicationPerformance.Controllers
                         augEvaluationsCount += 1;
                     }
                     Aug = augEvaluationsValue / augEvaluationsCount;
+
                     ViewBag.Aug = Aug;
+
                 }
                 else if (item.EvaluationDate.Month == 9)
                 {
@@ -409,7 +425,9 @@ namespace ApplicationPerformance.Controllers
                         sepEvaluationsCount += 1;
                     }
                     Sep = sepEvaluationsValue / sepEvaluationsCount;
+
                     ViewBag.Sep = Sep;
+
 
                 }
                 else if (item.EvaluationDate.Month == 10)
@@ -431,7 +449,9 @@ namespace ApplicationPerformance.Controllers
                         octEvaluationsCount += 1;
                     }
                     Oct = octEvaluationsValue / octEvaluationsCount;
+
                     ViewBag.Oct = Oct;
+
                 }
                 else if (item.EvaluationDate.Month == 11)
                 {
@@ -451,7 +471,9 @@ namespace ApplicationPerformance.Controllers
                         novEvaluationsCount += 1;
                     }
                     Nov = novEvaluationsValue / novEvaluationsCount;
+
                     ViewBag.Nov = Nov;
+
                 }
                 else if (item.EvaluationDate.Month == 12)
                 {
@@ -471,12 +493,65 @@ namespace ApplicationPerformance.Controllers
                         decEvaluationsCount += 1;
                     }
                     Dec = decEvaluationsValue / decEvaluationsCount;
+
                     ViewBag.Dec = Dec;
+
 
                 }
 
 
             }
+            if (ViewBag.Jan == null)
+            {
+                ViewBag.Jan = 0;
+            }
+            if (ViewBag.Feb == null)
+            {
+                ViewBag.Feb = 0;
+            }
+            if (ViewBag.Mar == null)
+            {
+                ViewBag.Mar = 0;
+            }
+            if (ViewBag.Apr == null)
+            {
+                ViewBag.Apr = 0;
+            }
+            if (ViewBag.May == null)
+            {
+                ViewBag.May = 0;
+            }
+            if (ViewBag.Jun == null)
+            {
+                ViewBag.Jun = 0;
+            }
+            if (ViewBag.Jul == null)
+            {
+                ViewBag.Jul = 0;
+            }
+            if (ViewBag.Aug == null)
+            {
+                ViewBag.Aug = 0;
+            }
+            if (ViewBag.Sep == null)
+            {
+                ViewBag.Sep = 0;
+            }
+            if (ViewBag.Oct == null)
+            {
+                ViewBag.Oct = 0;
+            }
+            if (ViewBag.Nov == null)
+            {
+                ViewBag.Nov = 0;
+            }
+            if (ViewBag.Dec == null)
+            {
+                ViewBag.Dec = 0;
+            }
+
+
+
             #endregion
 
 
@@ -493,7 +568,7 @@ namespace ApplicationPerformance.Controllers
                                        .Where(x =>
                                         x.EvaluationDate >= start
                                        && x.EvaluationDate <= end
-                                       && x.SystemUser.AssignedManager.Equals(user.AssignedManager)
+                                       && x.SystemUser.LastName.Equals(user.AssignedManager)
                                       )
                                        .OrderByDescending(x => x.EvaluationID)
                                        ;
@@ -526,8 +601,9 @@ namespace ApplicationPerformance.Controllers
                         empJanEvaluationsCount += 1;
                     }
                     empJan = empJanEvaluationsValue / empJanEvaluationsCount;
-                    
+
                     ViewBag.empJan = empJan;
+
                 }
 
 
@@ -549,7 +625,9 @@ namespace ApplicationPerformance.Controllers
                         empFebEvaluationsCount += 1;
                     }
                     empFeb = empFebEvaluationsValue / empFebEvaluationsCount;
+
                     ViewBag.empFeb = empFeb;
+
                 }
 
 
@@ -571,7 +649,9 @@ namespace ApplicationPerformance.Controllers
                         empMarEvaluationsCount += 1;
                     }
                     empMar = empMarEvaluationsValue / empMarEvaluationsCount;
+
                     ViewBag.empMar = empMar;
+
                 }
 
 
@@ -594,7 +674,9 @@ namespace ApplicationPerformance.Controllers
                         empAprEvaluationsCount += 1;
                     }
                     empApr = empAprEvaluationsValue / empAprEvaluationsCount;
+
                     ViewBag.empApr = empApr;
+
                 }
 
 
@@ -616,7 +698,9 @@ namespace ApplicationPerformance.Controllers
                         empMayEvaluationsCount += 1;
                     }
                     empMay = empMayEvaluationsValue / empMayEvaluationsCount;
+
                     ViewBag.empMay = empMay;
+
                 }
 
 
@@ -639,7 +723,9 @@ namespace ApplicationPerformance.Controllers
                         empJunEvaluationsCount += 1;
                     }
                     empJun = empJunEvaluationsValue / empJunEvaluationsCount;
-                    ViewBag.empJun = empMay;
+
+                    ViewBag.empJun = empJun;
+
                 }
                 else if (item.EvaluationDate.Month == 7)
                 {
@@ -660,7 +746,9 @@ namespace ApplicationPerformance.Controllers
                         empJulEvaluationsCount += 1;
                     }
                     empJul = empJulEvaluationsValue / empJulEvaluationsCount;
+
                     ViewBag.empJul = empJul;
+
                 }
                 else if (item.EvaluationDate.Month == 8)
                 {
@@ -680,7 +768,9 @@ namespace ApplicationPerformance.Controllers
                         empAugEvaluationsCount += 1;
                     }
                     empAug = empAugEvaluationsValue / empAugEvaluationsCount;
+
                     ViewBag.empAug = empAug;
+
                 }
                 else if (item.EvaluationDate.Month == 9)
                 {
@@ -700,7 +790,9 @@ namespace ApplicationPerformance.Controllers
                         empSepEvaluationsCount += 1;
                     }
                     empSep = empSepEvaluationsValue / empSepEvaluationsCount;
+
                     ViewBag.empSep = empSep;
+
                 }
                 else if (item.EvaluationDate.Month == 10)
                 {
@@ -721,7 +813,9 @@ namespace ApplicationPerformance.Controllers
                         empOctEvaluationsCount += 1;
                     }
                     empOct = empOctEvaluationsValue / empOctEvaluationsCount;
+
                     ViewBag.empOct = empOct;
+
                 }
                 else if (item.EvaluationDate.Month == 11)
                 {
@@ -741,7 +835,9 @@ namespace ApplicationPerformance.Controllers
                         empNovEvaluationsCount += 1;
                     }
                     empNov = empNovEvaluationsValue / empNovEvaluationsCount;
+
                     ViewBag.empNov = empNov;
+
                 }
                 else if (item.EvaluationDate.Month == 12)
                 {
@@ -761,11 +857,64 @@ namespace ApplicationPerformance.Controllers
                         empDecEvaluationsCount += 1;
                     }
                     empDec = empDecEvaluationsValue / empDecEvaluationsCount;
+
                     ViewBag.empDec = empDec;
+
 
                 }
 
 
+            }
+
+
+
+            if (ViewBag.empJan == null)
+            {
+                ViewBag.empJan = 0;
+            }
+            if (ViewBag.empFeb == null)
+            {
+                ViewBag.empFeb = 0;
+            }
+            if (ViewBag.empMar == null)
+            {
+                ViewBag.empMar = 0;
+            }
+            if (ViewBag.empApr == null)
+            {
+                ViewBag.empApr = 0;
+            }
+            if (ViewBag.empMay == null)
+            {
+                ViewBag.empMay = 0;
+            }
+            if (ViewBag.empJun == null)
+            {
+                ViewBag.empJun = 0;
+            }
+            if (ViewBag.empJul == null)
+            {
+                ViewBag.empJul = 0;
+            }
+            if (ViewBag.empAug == null)
+            {
+                ViewBag.empAug = 0;
+            }
+            if (ViewBag.empSep == null)
+            {
+                ViewBag.empSep = 0;
+            }
+            if (ViewBag.empOct == null)
+            {
+                ViewBag.empOct = 0;
+            }
+            if (ViewBag.empNov == null)
+            {
+                ViewBag.empNov = 0;
+            }
+            if (ViewBag.empDec == null)
+            {
+                ViewBag.empDec = 0;
             }
             #endregion
 
@@ -1447,7 +1596,7 @@ namespace ApplicationPerformance.Controllers
 
 
             var systemusers = from a in db.SystemUsers //grabs all users currently in the database
-                        select a;
+                              select a;
 
             systemusers = systemusers.Where(a => a.LastName.Equals(user.AssignedManager));
             SystemUser assignedmanager = (SystemUser)systemusers.First();
@@ -1461,8 +1610,8 @@ namespace ApplicationPerformance.Controllers
 
 
             var goals = from a in db.Goals //grabs all users currently in the database
-                                 select a; //.Where(a => a.GoalStatus.Equals(ApplicationPerformance.Models.GoalStatus.Complete));
-                                           // goalComplete = goalComplete.Where(a => a.GoalStatus.ToString().ToUpper().Equals("COMPLETE"));
+                        select a; //.Where(a => a.GoalStatus.Equals(ApplicationPerformance.Models.GoalStatus.Complete));
+                                  // goalComplete = goalComplete.Where(a => a.GoalStatus.ToString().ToUpper().Equals("COMPLETE"));
 
             goals = goals.Where(a => a.SystemUserID.Equals(user.SystemUserID));
             List<string> incompleteGoals = new List<string>();
@@ -1495,7 +1644,7 @@ namespace ApplicationPerformance.Controllers
 
             //incomplete = incomplete.Where(a => a.GoalStatus.Equals(ApplicationPerformance.Models.GoalStatus.Incomplete));
 
-            ViewBag.InCompleteGoalsList =  incompleteGoals;
+            ViewBag.InCompleteGoalsList = incompleteGoals;
             //ViewBag.InCompleteGoals = incompleteGoals.Count();
 
 
@@ -1506,7 +1655,7 @@ namespace ApplicationPerformance.Controllers
 
             Session["CompleteGoals"] = complete;
 
-            int totalCount =complete + incompleteGoals.Count();
+            int totalCount = complete + incompleteGoals.Count();
             ViewBag.TotalGoals = totalCount;
             Session["NumberOfGoals"] = totalCount;
 
@@ -1613,4 +1762,3 @@ namespace ApplicationPerformance.Controllers
         }
     }
 }
- 
